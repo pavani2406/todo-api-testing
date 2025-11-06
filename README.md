@@ -1,7 +1,7 @@
 # todo-api-testing
 API Testing project using Postman on To-Do AP(Beginner-friendly way to understand how HTTP requests work in practice)
 
-##Aim
+#Aim
 This project demonstrates API testing using Postman on the JSONPlaceholder To-Do API. 
 It helps beginners understand how HTTP requests work and how to validate API responses.
 
