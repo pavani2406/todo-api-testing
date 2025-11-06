@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "4d5a9380-d719-48f7-a45d-aac75dd024c8",
+		"name": "To-Do API Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46167634",
+		"_collection_link": "https://pavani-7032624.postman.co/workspace/project~953d320b-2c78-44fb-aa31-a2b96bca94e9/collection/46167634-4d5a9380-d719-48f7-a45d-aac75dd024c8?action=share&source=collection_link&creator=46167634"
+	},
+	"item": [
+		{
+			"name": "Get All To-Dos",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/todos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1todo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has userId, id, title, completed\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData).to.have.property(\"completed\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/todos/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new todo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test status code is 201\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Test response contains the fields we sent, and id exists\r",
+							"pm.test(\"Response contains id, title, userId, completed\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\"); // JSONPlaceholder always adds id\r",
+							"    pm.expect(jsonData).to.have.property(\"title\");\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData).to.have.property(\"completed\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 123,\r\n  \"title\": \"Learn Postman API Testing\",\r\n  \"completed\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/todos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "show the added ttodo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/todos/123",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos",
+						"123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update To-Do",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 1,\r\n  \"title\": \"Updated To-Do with ID 5\",\r\n  \"completed\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/todos/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleted id5",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 1,\r\n  \"title\": \"Updated To-Do with ID 5\",\r\n  \"completed\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/todos/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"todos",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
